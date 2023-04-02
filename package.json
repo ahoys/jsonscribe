@@ -1,5 +1,5 @@
 {
-  "name": "radb",
+  "name": "jsonscribe",
   "version": "1.0.0",
   "description": "A tiny JSON-database for settings.",
   "main": "dist/index.js",
@@ -37,9 +37,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/ahoys/radb.git"
+    "url": "git://github.com/ahoys/jsonscribe.git"
   },
-  "bugs": "https://github.com/ahoys/radb/issues",
+  "bugs": "https://github.com/ahoys/jsonscribe/issues",
   "files": [
     "dist"
   ],

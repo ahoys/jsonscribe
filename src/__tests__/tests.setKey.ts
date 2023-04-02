@@ -1,5 +1,5 @@
 import fs from 'fs';
-import radb, { JSONValueType } from '../index';
+import jsonscribe, { JSONValueType } from '../index';
 
 const path = './test.setKey.json';
 
@@ -7,7 +7,7 @@ let setKey: (key: string, value: JSONValueType) => Promise<void>;
 
 describe('setKey function', () => {
   beforeAll(() => {
-    const db = radb({ path });
+    const db = jsonscribe({ path });
     setKey = db.setKey;
   });
 

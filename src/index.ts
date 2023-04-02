@@ -65,13 +65,13 @@ const getKey = async (key: JSONKeyType, path: string): Promise<JSONValueType> =>
     })
   );
 
-interface radbOptions {
+interface JSONScribeOptions {
   path: string;
 }
 
 export default ({
   path = 'db.json',
-}: radbOptions): {
+}: JSONScribeOptions): {
   setKey: (key: JSONKeyType, value: JSONValueType) => Promise<void>;
   getKey: (key: JSONKeyType) => Promise<JSONValueType>;
 } => {

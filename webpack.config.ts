@@ -8,7 +8,7 @@ const config = {
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'index.js',
-    library: 'radb',
+    library: 'jsonscribe',
     libraryTarget: 'umd'
   },
   module: {

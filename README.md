@@ -1,4 +1,4 @@
-# radb 📦
+# jsonscribe 📦
 
 A tiny JSON "database" for settings and more.
 
@@ -11,14 +11,14 @@ You know how overly complex most of the "lightweight" databases are? Well this a
 
 ## Install
 
-`npm i radb` or `yarn add radb`
+`npm i jsonscribe` or `yarn add jsonscribe`
 
 ## Example of usage
 
 ```
-import radb from '../index';
+import jsonscribe from '../index';
 
-const { setKey, getKey } = radb({ path: './test.json' });
+const { setKey, getKey } = jsonscribe({ path: './test.json' });
 
 await setKey('key', 123);
 const value = await getKey('key');
