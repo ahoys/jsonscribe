@@ -1,14 +1,14 @@
 import fs from 'fs';
-import jsonscribe, { JSONValueType } from '../index';
+import jsonscribe, { JSONScribeFile } from '../index';
 
 const path = './test.getKey.json';
 
-let setKey: (key: string, value: JSONValueType) => Promise<void>;
-let getKey: (key: string) => Promise<JSONValueType>;
+let setKey: JSONScribeFile<string>['setKey'];
+let getKey: JSONScribeFile<string>['getKey'];
 
 describe('getKey function', () => {
   beforeAll(async () => {
-    const db = jsonscribe({ path });
+    const db = jsonscribe<string>({ path });
     setKey = db.setKey;
     getKey = db.getKey;
     await setKey('name', 'John');

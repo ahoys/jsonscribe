@@ -32,15 +32,11 @@ export const createJsonFile = (path: string): void => {
  * @param value Value to update the key with.
  * @param path Path to the JSON file.
  */
-const setKey = async (
-  key: JSONKeyType,
-  value: JSONValueType,
-  path: string
-): Promise<void> =>
-  new Promise((resolve) => {
+async function setKey<T>(key: string, value: T, path: string): Promise<void> {
+  return new Promise((resolve) => {
     fs.readFile(path, async (err, data) => {
       if (err) throw err;
-      const json: JSONType = JSON.parse(data.toString());
+      const json = JSON.parse(data.toString());
       json[key] = value;
       fs.writeFile(path, JSON.stringify(json), (err) => {
         if (err) throw err;
@@ -48,6 +44,7 @@ const setKey = async (
       });
     });
   });
+}
 
 /**
  * Reads a key from a JSON file.
@@ -55,30 +52,32 @@ const setKey = async (
  * @param path Path to the JSON file.
  * @returns Value of the key.
  */
-const getKey = async (key: JSONKeyType, path: string): Promise<JSONValueType> =>
-  new Promise((resolve) =>
+async function getKey<T>(key: string, path: string): Promise<T | undefined> {
+  return new Promise((resolve) =>
     fs.readFile(path, async (err, data) => {
       if (err) throw err;
       resolve(JSON.parse(data.toString())[key]);
     })
   );
+}
 
-export interface JSONScribeFile {
-  setKey: (key: JSONKeyType, value: JSONValueType) => Promise<void>;
-  getKey: (key: JSONKeyType) => Promise<JSONValueType>;
+export interface JSONScribeFile<T> {
+  setKey: (key: string, value: T) => Promise<void>;
+  getKey: (key: string) => Promise<T | undefined>;
 }
 
 interface JSONScribeOptions {
   path: string;
 }
 
-export default ({
+function jsonscribe<T>({
   path = 'db.json',
-}: JSONScribeOptions): JSONScribeFile => {
+}: JSONScribeOptions): JSONScribeFile<T> {
   createJsonFile(path);
   return {
-    setKey: (key: JSONKeyType, value: JSONValueType) =>
-      setKey(key, value, path),
-    getKey: (key: JSONKeyType) => getKey(key, path),
+    setKey: (key: string, value: T) => setKey<T>(key, value, path),
+    getKey: (key: string): Promise<T | undefined> => getKey<T>(key, path),
   };
-};
+}
+
+export default jsonscribe;
