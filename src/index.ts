@@ -14,8 +14,6 @@ interface JSONType {
   [key: string]: JSONValueType;
 }
 
-let db: JSONType = {};
-
 /**
  * Creates a JSON file if it does not already exist.
  * @param path Path to the JSON file.
@@ -65,18 +63,19 @@ const getKey = async (key: JSONKeyType, path: string): Promise<JSONValueType> =>
     })
   );
 
+export interface JSONScribeFile {
+  setKey: (key: JSONKeyType, value: JSONValueType) => Promise<void>;
+  getKey: (key: JSONKeyType) => Promise<JSONValueType>;
+}
+
 interface JSONScribeOptions {
   path: string;
 }
 
 export default ({
   path = 'db.json',
-}: JSONScribeOptions): {
-  setKey: (key: JSONKeyType, value: JSONValueType) => Promise<void>;
-  getKey: (key: JSONKeyType) => Promise<JSONValueType>;
-} => {
+}: JSONScribeOptions): JSONScribeFile => {
   createJsonFile(path);
-  db = JSON.parse(fs.readFileSync(path).toString());
   return {
     setKey: (key: JSONKeyType, value: JSONValueType) =>
       setKey(key, value, path),
