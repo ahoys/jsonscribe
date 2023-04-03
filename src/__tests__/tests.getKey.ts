@@ -11,7 +11,7 @@ describe('getKey function', () => {
     const db = jsonscribe<string>({ path });
     setKey = db.setKey;
     getKey = db.getKey;
-    await setKey('name', 'John');
+    setKey('name', 'John');
   });
 
   afterAll(() => {
@@ -26,7 +26,7 @@ describe('getKey function', () => {
     const value = 'John';
 
     // Act
-    const result = await getKey(key);
+    const result = getKey(key);
 
     // Assert
     expect(result).toEqual(value);

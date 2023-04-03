@@ -32,18 +32,13 @@ export const createJsonFile = (path: string): void => {
  * @param value Value to update the key with.
  * @param path Path to the JSON file.
  */
-async function setKey<T>(key: string, value: T, path: string): Promise<void> {
-  return new Promise((resolve) => {
-    fs.readFile(path, async (err, data) => {
-      if (err) throw err;
-      const json = JSON.parse(data.toString());
-      json[key] = value;
-      fs.writeFile(path, JSON.stringify(json), (err) => {
-        if (err) throw err;
-        resolve();
-      });
-    });
-  });
+function setKey<T>(key: string, value: T, path: string): void {
+  const data = fs.readFileSync(path);
+  if (data) {
+    const json = JSON.parse(data.toString());
+    json[key] = value;
+    fs.writeFileSync(path, JSON.stringify(json));
+  }
 }
 
 /**
@@ -52,18 +47,14 @@ async function setKey<T>(key: string, value: T, path: string): Promise<void> {
  * @param path Path to the JSON file.
  * @returns Value of the key.
  */
-async function getKey<T>(key: string, path: string): Promise<T | undefined> {
-  return new Promise((resolve) =>
-    fs.readFile(path, async (err, data) => {
-      if (err) throw err;
-      resolve(JSON.parse(data.toString())[key]);
-    })
-  );
+function getKey<T>(key: string, path: string): T {
+  const file = fs.readFileSync(path);
+  return JSON.parse(file.toString())[key];
 }
 
 export interface JSONScribeFile<T> {
-  setKey: (key: string, value: T) => Promise<void>;
-  getKey: (key: string) => Promise<T | undefined>;
+  setKey: (key: string, value: T) => void;
+  getKey: (key: string) => T | undefined;
 }
 
 interface JSONScribeOptions {
@@ -76,7 +67,7 @@ function jsonscribe<T>({
   createJsonFile(path);
   return {
     setKey: (key: string, value: T) => setKey<T>(key, value, path),
-    getKey: (key: string): Promise<T | undefined> => getKey<T>(key, path),
+    getKey: (key: string): T | undefined => getKey<T>(key, path),
   };
 }
 

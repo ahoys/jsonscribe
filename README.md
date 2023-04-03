@@ -20,7 +20,7 @@ import jsonscribe from '../index';
 
 const { setKey, getKey } = jsonscribe({ path: './test.json' });
 
-await setKey('key', 123);
-const value = await getKey('key');
+setKey('key', 123);
+const value = getKey('key');
 console.log(value); // 123
 ```

@@ -3,7 +3,7 @@ import jsonscribe, { JSONValueType } from '../index';
 
 const path = './test.setKey.json';
 
-let setKey: (key: string, value: JSONValueType) => Promise<void>;
+let setKey: (key: string, value: JSONValueType) => void;
 
 describe('setKey function', () => {
   beforeAll(() => {
@@ -37,7 +37,7 @@ describe('setKey function', () => {
     const value = 'Mary';
 
     // Act
-    await setKey(key, value);
+    setKey(key, value);
 
     // Assert
     const data = await fs.promises.readFile(path);
